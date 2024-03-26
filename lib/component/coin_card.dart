@@ -105,7 +105,7 @@ class CoinCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: 10)),
+          const Padding(padding: EdgeInsets.only(top: 30)),
           Container(
             width: 350,
             height: 100,

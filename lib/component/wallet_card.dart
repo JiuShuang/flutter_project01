@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../constants/constant.dart';
 class WalletCard extends StatelessWidget {
   const WalletCard({super.key});
-  Widget iconButton(IconData icon) {
+
+  Widget iconButton(IconData icon,Function() onPressed) {
     return Container(
       width: 65,
       height: 65,
@@ -13,18 +15,23 @@ class WalletCard extends StatelessWidget {
           color: Colors.deepPurple.shade700.withOpacity(0.8)
       ),
       child: IconButton(
-        onPressed: (){},
+        onPressed: (){
+          onPressed();
+        },
         icon: Icon(icon,color: Colors.white,size: 40,),
       ),
     );
   }
+
+
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Column(
         children: [
           Container(
-            margin: const EdgeInsets.only(left: 5,top:40),
+            margin: const EdgeInsets.only(top:10),
             padding: const EdgeInsets.only(left: 20,top:30,right: 20),
             height: 200,
             width: 350,
@@ -80,10 +87,42 @@ class WalletCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                iconButton(Icons.arrow_downward_outlined),
-                iconButton(Icons.turn_slight_right_outlined),
-                iconButton(Icons.code),
-                iconButton(Icons.add)
+                iconButton(Icons.arrow_downward_outlined,
+                    ()=>{
+                      Get.snackbar("Download", "Download Your Data Successful",
+                        colorText: Colors.white,
+                        icon: const Icon(Icons.download),
+                        duration: const Duration(seconds: 2),
+                        onTap:(e){
+                          Get.toNamed("/ImportWallet");
+                        }
+                      )
+                    }
+                ),
+                iconButton(Icons.turn_slight_right_outlined, ()=>{
+                    Get.defaultDialog(
+                      title: "testDialog",
+                      content: const Column(
+                        children: [
+                          Icon(Icons.add),
+                          Icon(Icons.ac_unit_sharp)
+                        ],
+                      ),
+                      cancel: ElevatedButton(onPressed: (){
+                          Get.back();
+                      }, child: const Text("cancelTest")),
+                    )
+                  }
+                ),
+                iconButton(Icons.code,()=>{
+                  Get.bottomSheet(
+                    Container(
+                      width: 400,
+                    ),
+                    backgroundColor: Colors.white
+                  )
+                }),
+                iconButton(Icons.add,()=> Get.toNamed("/ImportWallet"))
               ],
             ),
           )
